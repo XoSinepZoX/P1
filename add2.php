@@ -1,5 +1,8 @@
 <?php
 	include('dbconn.php');
+    if ($conn->connect_errno) {
+        echo $sqlconn->connect_errno ." : ". $sqlconn->connect_error;
+    }
 	session_start();
 		if(isset($_POST['next'])){
 			$uname = mysqli_real_escape_string($conn,$_POST['uname']);
@@ -20,29 +23,24 @@
 			$memberadd = $_POST['memberadd'];
 			$setadd = $_POST['setadd'];
 			$styleadd = $_POST['styleadd'];
-			$q="INSERT mydataset.listings (uname,Description,Pic,MemName,SetName,Style) 
+			$q="INSERT INTO Listings (uname,Description,Pic,MemName,SetName,Style) 
 			VALUES ('$uname','$descr','$pic','$memberadd','$setadd','$styleadd')";
-
-			$queryJobConfig = $bigQuery->query($q);
-			$job = $bigQuery->startQuery($queryJobConfig);
-			$queryResults = $job->queryResults();
-			if(!$$queryResults){
-				echo "INSERT failed. Error: ";
+			$result=$conn->query($q);
+			if(!$result){
+				echo "INSERT failed. Error: ".$conn->error ;
 			}
 			else{
 				if ($styleadd=='Complete') {
 					//echo("HERE");
-					$q4="INSERT mydataset.piccomp (ItemID,PIC2,PIC3) VALUES ((SELECT ItemID FROM `hopeful-lexicon-236016.mydataset.listings` as Listings WHERE uname='$uname' ORDER BY DateAdded DESC LIMIT 1),'$pic2','$pic3')";
+					$q4="INSERT INTO PicComp(ItemID,PIC2,PIC3) VALUES ((SELECT ItemID FROM Listings WHERE uname='$uname' ORDER BY DateAdded DESC LIMIT 1),'$pic2','$pic3')";
 					//echo($q4);
-					$queryJobConfig2 = $bigQuery->query($q4);
-					$job2 = $bigQuery->startQuery($queryJobConfig2);
-					$queryResults2 = $job2->queryResults();
-					if(!$queryResults2){
-						echo "INSERT failed. Error: ";
+					$result2=$conn->query($q4);
+					if(!$result2){
+						echo "INSERT failed. Error: ".$conn->error ;
 					}
 				}
-				if (!$queryResults2) {
-					echo "INSERT failed. Error: ";
+				if (!$result2) {
+					echo "INSERT failed. Error: ".$conn->error ;
 				}
 				else{
 					header("Location: contentmain.php");
@@ -57,8 +55,7 @@
 <html>
 <head>
 	<title></title>
-	<link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
-        <link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body class="centera bgc-base-color">
 			<h2>Add listing</h2>

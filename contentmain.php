@@ -1,5 +1,9 @@
 <?php
 	include('dbconn.php');
+    if ($conn->connect_errno) {
+        echo $sqlconn->connect_errno ." : ". $sqlconn->connect_error;
+	}
+
 	session_start();
 	$compcount = 0;
 	$id =0;
@@ -8,21 +12,20 @@
 <html>
 <head>
 	<title></title>
-	<link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
-        <link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body class="centera bgc-base-color" style = "margin-left:4em" >
 	<div class = "flex-item">
 		<!-- ITEM LOOP BEGIN -->
 			<!-- QUARY PART START HERE -->
 				<?php
-				$q = 'SELECT listings.ItemID,Pic,Style,PIC2,PIC3,MemName,SetName FROM `hopeful-lexicon-236016.mydataset.listings` as Listings LEFT JOIN `hopeful-lexicon-236016.mydataset.piccomp` as PicComp on Listings.ItemID=PicComp.ItemID ORDER BY DateAdded DESC';
+				$q = 'SELECT listings.ItemID,Pic,Style,PIC2,PIC3,MemName,SetName FROM Listings LEFT JOIN PicComp on Listings.ItemID=PicComp.ItemID ORDER BY DateAdded DESC';
 				$count=0;
-				$queryJobConfig = $bigQuery->query($q);
-				$job = $bigQuery->startQuery($queryJobConfig);
-				$queryResults = $job->queryResults();
-				if ($queryResults->isComplete()) {	
-				foreach ($queryResults as $row) {
+				if ($res = $conn->query($q))
+				{
+					while($row = $res->fetch_array())
+					{
+						//var_dump($row);
 				?>
 			<!-- END QUARY PART HERE -->
 				<div class ="itemstyle">

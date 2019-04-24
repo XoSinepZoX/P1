@@ -1,22 +1,23 @@
 <?php
 	include('dbconn.php');
+    if ($conn->connect_errno) {
+        echo $sqlconn->connect_errno ." : ". $sqlconn->connect_error;
+    }
 	session_start();
 
 
     if(isset($_GET['itemid'])) {
 		$itemid=$_GET['itemid'];
 	}
-	$q = 'SELECT DateAdded,uname,Description,Pic,MemName,SetName,Style,PIC2,PIC3 FROM `hopeful-lexicon-236016.mydataset.listings` as Listings LEFT JOIN `hopeful-lexicon-236016.mydataset.piccomp` as PicComp on Listings.ItemID=PicComp.ItemID ORDER BY DateAdded DESC';
-	$queryJobConfig = $bigQuery->query($query);
-	$queryResults = $bigQuery->runQuery($queryJobConfig);
-	$rows = $queryResults->rows();
+	$q = 'SELECT DateAdded,uname,Description,Pic,MemName,SetName,Style,PIC2,PIC3 FROM Listings LEFT JOIN PicComp on Listings.ItemID=PicComp.ItemID WHERE listings.itemID='.$itemid.' ORDER BY DateAdded DESC';
+	$res = $conn->query($q);
+	$row = $res->fetch_array();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
-	<link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
-        <link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 	<div class="bgc-base-color citem-column">

@@ -1,13 +1,16 @@
 <?php
 	include('dbconn.php');
+    if ($conn->connect_errno) {
+        echo $sqlconn->connect_errno ." : ". $sqlconn->connect_error;
+    }
+
 	session_start();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Welcome to BNK 48 Market</title>
-	<link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
-        <link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
+	<link rel="stylesheet" href="styles.css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"></head>
 <body class = "bgc-bob-color">
 	<table class ="tablestyle main-table" width="85%" border = "0">

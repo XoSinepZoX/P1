@@ -1,12 +1,14 @@
 <?php
     include('dbconn.php');
+    if ($conn->connect_errno) {
+        echo $sqlconn->connect_errno ." : ". $sqlconn->connect_error;
+    }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
-	<link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
-        <link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body class="centera bgc-base-color">
 <form action="add2.php" method="POST" autocomplete="off">
