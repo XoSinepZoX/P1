@@ -15,7 +15,8 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" href="styles.css">
+	<link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
+        <link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
 </head>
 <body>
 	<div class="bgc-base-color citem-column">
