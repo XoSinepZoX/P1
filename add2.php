@@ -57,7 +57,8 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" href="styles.css">
+	<link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
+        <link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
 </head>
 <body class="centera bgc-base-color">
 			<h2>Add listing</h2>
